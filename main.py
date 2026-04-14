@@ -7,20 +7,28 @@ import schemas
 import crud
 from database import engine, Base, get_db
 
-
 # Create tables automatically
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Adjust origins as needed
+# ---------------- CORS FIX ----------------
+# These are the ONLY origins your frontend uses.
+# "*" does NOT work when allow_credentials=True.
+# Browsers block the request unless the exact origin is listed.
+origins = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# -------------------------------------------
 
 
 # ---------- Auth ----------
@@ -117,7 +125,6 @@ def delete_schedule(schedule_id: int, db: Session = Depends(get_db)):
 
 @app.get("/recommendation/{user_id}")
 def get_recommendation(user_id: int, db: Session = Depends(get_db)):
-    # Placeholder logic – you can plug in real recommendation later
     user = crud.get_user(db, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
