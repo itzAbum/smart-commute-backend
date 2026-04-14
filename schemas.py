@@ -4,6 +4,12 @@ from pydantic import BaseModel, EmailStr
 
 # ---------- User ----------
 
+class UsernameUpdate(BaseModel):
+    username: str
+
+class PasswordUpdate(BaseModel):
+    password: str
+
 class UserBase(BaseModel):
     username: str
 
