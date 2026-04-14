@@ -37,6 +37,7 @@ class ScheduleBase(BaseModel):
     days: List[str]
     start: datetime
     end: datetime
+    building_id: Optional[int] = None
 
 class ScheduleCreate(ScheduleBase):
     user_id: int
@@ -46,10 +47,12 @@ class ScheduleUpdate(BaseModel):
     days: Optional[List[str]] = None
     start: Optional[datetime] = None
     end: Optional[datetime] = None
+    building_id: Optional[int] = None
 
 class ScheduleOut(ScheduleBase):
     id: int
     user_id: int
+    building_id: Optional[int] = None
     class Config:
         from_attributes = True
 
