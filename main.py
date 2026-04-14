@@ -60,6 +60,28 @@ def login(payload: schemas.LoginRequest, db: Session = Depends(get_db)):
 
 # ---------- Users & Profiles ----------
 
+@app.put("/users/{user_id}/username", response_model=schemas.UserOut)
+def update_username(user_id: int, data: schemas.UsernameUpdate, db: Session = Depends(get_db)):
+    existing = crud.get_user_by_username(db, data.username)
+    if existing:
+        raise HTTPException(status_code=400, detail="Username already taken")
+    user = crud.update_username(db, user_id, data.username)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+@app.put("/users/{user_id}/password")
+def update_password(user_id: int, data: schemas.PasswordUpdate, db: Session = Depends(get_db)):
+    user = crud.update_password(db, user_id, data.password)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"detail": "Password updated"}
+
+@app.delete("/users/{user_id}/schedules")
+def delete_all_schedules(user_id: int, db: Session = Depends(get_db)):
+    crud.delete_all_schedules(db, user_id)
+    return {"detail": "All schedules deleted"}
+
 @app.get("/users/{user_id}", response_model=schemas.UserOut)
 def get_user(user_id: int, db: Session = Depends(get_db)):
     user = crud.get_user(db, user_id)
