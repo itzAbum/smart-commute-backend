@@ -89,6 +89,7 @@ def create_schedule(db: Session, schedule: schemas.ScheduleCreate) -> models.Sch
         days=schedule.days,
         start=schedule.start,
         end=schedule.end,
+        building_id=schedule.building_id,
     )
     db.add(db_schedule)
     db.commit()
