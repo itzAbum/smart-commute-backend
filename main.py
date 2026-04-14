@@ -12,6 +12,8 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+print(">>> RUNNING UPDATED MAIN.PY WITH NEW CORS <<<")
+
 # ---------------- CORS FIX ----------------
 # These are the ONLY origins your frontend uses.
 # "*" does NOT work when allow_credentials=True.
