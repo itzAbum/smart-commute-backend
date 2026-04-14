@@ -36,5 +36,6 @@ class SchedulesNew(Base):
     days = Column(JSON, nullable=False)  # ["Monday", "Wednesday", ...]
     start = Column(DateTime, nullable=False)
     end = Column(DateTime, nullable=False)
+    building_id = Column(Integer, nullable=True)
 
     user = relationship("UsersNew", back_populates="schedules")
