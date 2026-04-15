@@ -14,10 +14,8 @@ app = FastAPI()
 
 print(">>> RUNNING UPDATED MAIN.PY WITH NEW CORS <<<")
 
-# ---------------- CORS FIX ----------------
-# These are the ONLY origins your frontend uses.
-# "*" does NOT work when allow_credentials=True.
-# Browsers block the request unless the exact origin is listed.
+# CORS fix, hopefully it works
+
 origins = [
     "http://127.0.0.1:8000",
     "http://localhost:8000",
